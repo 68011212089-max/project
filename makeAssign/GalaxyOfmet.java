@@ -16,7 +16,7 @@ class frame extends JFrame {
         setSize(550,600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        
+        setVisible(true);
     }
     
     
