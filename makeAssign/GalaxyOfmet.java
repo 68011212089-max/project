@@ -50,40 +50,47 @@ class Galaxy extends JPanel {
             metMoves[i].start();
         }
 
-        (new Collition(met)).start();
+        (new Collition(met, metMoves)).start();
     }
 }
 
 class Collition extends Thread {
     Met[] m = new Met[10];
+    MetMove[] move = new MetMove[10];
 
-    Collition(Met m[]) {
+    Collition(Met m[], MetMove[] move) {
         this.m = m;
+        this.move = move;
     }
 
     @Override
     public void run() {
         while (true) {
-            for (int i = 0; i < m.length; i++) {
-                Met current = m[i];
-
-                for (int k = 0; k < m.length; k++) {
-                    Met target = m[k];
-
-                    if (current.getX() - target.getX() > 50
-                            && current.getY() - target.getY() > 50) {
-
-                        current.destroy();
-                    }
-                }
-            }
-
             try {
-                Thread.sleep(100);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+
+            for (int i = 0; i < m.length; i++) {
+                Met current = m[i];
+
+                for (int k = 0; k < m.length; k++) {
+                    if (i == k)
+                        continue;
+
+                    Met target = m[k];
+
+                    if (Math.abs(target.getX() - current.getX()) < 50
+                            && Math.abs(target.getY() - current.getY()) < 50) {
+                        target.destroy();
+                        move[k].setDie();
+                        break;
+                    }
+                }
+            }
+
         }
     }
 }
@@ -101,6 +108,7 @@ class Met extends JPanel {
 
     public void destroy() {
         setSize(0, 0);
+        setLocation(-100, -100);
     }
 
     @Override
@@ -119,6 +127,8 @@ class MetMove extends Thread {
     private int _x = 0;
     private int _y = 0;
 
+    boolean isDie = false;
+
     public MetMove(Met met, Galaxy galaxy) {
         this.met = met;
         this.galaxy = galaxy;
@@ -130,7 +140,7 @@ class MetMove extends Thread {
 
     @Override
     public void run() {
-        while (true) {
+        while (!isDie) {
             met.setLocation(met.getX() + get_x(), met.getY() + get_y());
             crashBorder();
             try {
@@ -141,6 +151,10 @@ class MetMove extends Thread {
             }
         }
 
+    }
+
+    public void setDie() {
+        isDie = true;
     }
 
     public int get_x() {
