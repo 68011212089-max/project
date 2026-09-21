@@ -27,7 +27,8 @@ class Frame extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        add(new Galaxy(), BorderLayout.CENTER);
+        Galaxy g = new Galaxy();
+        add(g, BorderLayout.CENTER);
 
         setVisible(true);
     }
@@ -35,20 +36,47 @@ class Frame extends JFrame {
 }
 
 class Galaxy extends JPanel {
-    // Met n =new Met();
+    Met[] met = new Met[10];
+    MetMove[] metMoves = new MetMove[met.length];
+
     public Galaxy() {
         setLayout(null);
         setBackground(Color.BLACK);
-        Met[] met = new Met[10];
-        MetMove[] metMoves = new MetMove[met.length];
+
         for (int i = 0; i < met.length; i++) {
             met[i] = new Met();
             add(met[i]);
             metMoves[i] = new MetMove(met[i], this);
             metMoves[i].start();
         }
+        
+        (new Collition(met)).run();
+    }
+}
+
+class Collition extends Thread {
+    Met[] m = new Met[10];
+
+    Collition(Met m[]) {
+        this.m = m;
     }
 
+    @Override
+    public void run() {
+        for (int i = 0; i < m.length; i++) {
+            Met current = m[i];
+
+            for (int k = 0; k < m.length; k++) {
+                Met target = m[k];
+
+                if (current.getX() - target.getX() > 50
+                        && current.getY() - target.getY() > 50) {
+
+                    current.destroy();
+                }
+            }
+        }
+    }
 }
 
 class Met extends JPanel {
@@ -60,7 +88,10 @@ class Met extends JPanel {
     public Met() {
         setBounds((random.nextInt(500) + 1), (random.nextInt(500) + 1), 50, 50);
         setOpaque(false);
+    }
 
+    public void destroy() {
+        setSize(0, 0);
     }
 
     @Override
