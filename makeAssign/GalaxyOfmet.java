@@ -117,7 +117,6 @@ class Met extends JPanel {
         g.drawImage(metImage, 0, 0, 50, 50, this);
 
     }
-
 }
 
 class MetMove extends Thread {
@@ -127,6 +126,7 @@ class MetMove extends Thread {
     private int _x = 0;
     private int _y = 0;
 
+    private int speed = 3;
     boolean isDie = false;
 
     public MetMove(Met met, Galaxy galaxy) {
@@ -144,13 +144,12 @@ class MetMove extends Thread {
             met.setLocation(met.getX() + get_x(), met.getY() + get_y());
             crashBorder();
             try {
-                Thread.sleep(100 / 3);
+                Thread.sleep(100 / speed);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
-
     }
 
     public void setDie() {
@@ -177,17 +176,21 @@ class MetMove extends Thread {
         if (met.getX() <= 0) {
             set_x(1);
             set_y(random.nextInt(3) - 1);
+            speed ++;
         } else if ((met.getX() + met.getWidth()) >= galaxy.getWidth()) {
             set_x(-1);
             set_y(random.nextInt(3) - 1);
+            speed ++;
         }
-
+        
         if (met.getY() <= 0) {
             set_y(1);
             set_x(random.nextInt(3) - 1);
+            speed ++;
         } else if ((met.getY() + met.getHeight()) >= galaxy.getHeight()) {
             set_y(-1);
             set_x(random.nextInt(3) - 1);
+            speed ++;
         }
     }
 }
