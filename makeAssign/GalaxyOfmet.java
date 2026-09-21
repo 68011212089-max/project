@@ -49,8 +49,8 @@ class Galaxy extends JPanel {
             metMoves[i] = new MetMove(met[i], this);
             metMoves[i].start();
         }
-        
-        (new Collition(met)).run();
+
+        (new Collition(met)).start();
     }
 }
 
@@ -63,17 +63,26 @@ class Collition extends Thread {
 
     @Override
     public void run() {
-        for (int i = 0; i < m.length; i++) {
-            Met current = m[i];
+        while (true) {
+            for (int i = 0; i < m.length; i++) {
+                Met current = m[i];
 
-            for (int k = 0; k < m.length; k++) {
-                Met target = m[k];
+                for (int k = 0; k < m.length; k++) {
+                    Met target = m[k];
 
-                if (current.getX() - target.getX() > 50
-                        && current.getY() - target.getY() > 50) {
+                    if (current.getX() - target.getX() > 50
+                            && current.getY() - target.getY() > 50) {
 
-                    current.destroy();
+                        current.destroy();
+                    }
                 }
+            }
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }
     }
