@@ -44,7 +44,7 @@ public class Galaxy extends JPanel implements Runnable {
                 Planet target = planet[k];
 
                 if (target.isCollision(self.x, self.y)) {
-                    target.destroy();
+                    target.crash();
                     break;
                 }
             }
@@ -67,6 +67,5 @@ public class Galaxy extends JPanel implements Runnable {
 
         setLayout(null);
         setBackground(Color.BLACK);
-        repaint();
     }
 }

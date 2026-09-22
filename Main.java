@@ -21,16 +21,18 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) {
-        int planetCount = 5;
-
+        // Asking for Number of Planet
         String maxPlanet = JOptionPane.showInputDialog(null, "Number Of Planet", "Falling Star",
                 JOptionPane.QUESTION_MESSAGE);
 
+        // Parsing number from Quesion Dialog or use 5 if fail to parse
+        int planetCount = 5;
         try {
             planetCount = Integer.valueOf(maxPlanet);
         } catch (Exception e) {
         }
 
+        // create Main object
         new Main(planetCount);
     }
 }
