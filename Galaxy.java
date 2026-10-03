@@ -36,7 +36,7 @@ public class Galaxy extends JPanel implements Runnable {
 
             if (self.isCrashed)
                 continue;
-            
+
             for (int k = 0; k < planet.length; k++) {
                 if (i == k)
                     continue;
@@ -44,10 +44,14 @@ public class Galaxy extends JPanel implements Runnable {
                 Planet target = planet[k];
 
                 if (target.isCollision(self.x, self.y)) {
-                    target.crash();
+                    if (self.speed >= target.speed) // checking a speed of planet, the slower will be crash
+                        target.crash();
+                    else
+                        self.crash();
                     break;
                 }
             }
+
         }
     }
 
