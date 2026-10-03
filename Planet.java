@@ -40,7 +40,7 @@ public class Planet extends Thread {
         do {
             vx = random.nextInt(7) - 3;
             vy = random.nextInt(7) - 3;
-        } while (vx == 0 && vy == 0); // od it until some velocity is not zero
+        } while (vx == 0 && vy == 0); // do it until some velocity is not zero
 
         speed = random.nextInt(10) + 10;
     }
