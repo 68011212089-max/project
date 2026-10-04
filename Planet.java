@@ -93,6 +93,9 @@ public class Planet extends Thread {
             vy = -1;
             speed++;
         }
+
+        if (speed > 50)
+            speed = 50;
     }
 
     @Override
