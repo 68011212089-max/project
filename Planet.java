@@ -38,8 +38,8 @@ public class Planet extends Thread {
         y = random.nextInt(canvasHeight - planetSize) + planetSize;
 
         do {
-            vx = random.nextInt(7) - 3;
-            vy = random.nextInt(7) - 3;
+            vx = random.nextInt(3) - 1;
+            vy = random.nextInt(3) - 1;
         } while (vx == 0 && vy == 0); // do it until some velocity is not zero
 
         speed = random.nextInt(10) + 10;
