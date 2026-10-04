@@ -10,7 +10,7 @@ public class Main extends JFrame {
         setSize(canvasWidth, canvasHeight);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
+        setResizable(false);
         Galaxy galaxy = new Galaxy(canvasWidth, canvasHeight, planetCount, planetSize);
         add(galaxy);
 
